@@ -6,10 +6,10 @@ if [ $cleanbuild = 1 ]
 then
 	make clean O=out
 	make mrproper O=out
-	rm -rf AnyKernel3
 	rm -rf out
 	mkdir out
 fi
+rm -rf AnyKernel3
 git clone https://github.com/ShivamKumar2002/LLVM-Clang-11 llvm-clang --depth=1
 git clone https://github.com/ShivamKumar2002/AnyKernel3 AnyKernel3 --depth=1
 git clone https://android.googlesource.com/platform/system/libufdt scripts/ufdt/libufdt
