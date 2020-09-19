@@ -37,4 +37,3 @@ fi
 cp out/arch/arm64/boot/dtbo.img AnyKernel3/
 cd AnyKernel3
 zip -r9 "m4st3rkernel-dtbo-$(TZ=Asia/Kolkata date +'%M%H-%d%m%Y').zip" *
-mv m4st3r*.zip ../
