@@ -13,6 +13,7 @@ echo "Cloning Repos..."
 git clone https://github.com/ShivamKumar2002/LLVM-Clang-11 llvm-clang --depth=1
 git clone https://github.com/ShivamKumar2002/AnyKernel3 AnyKernel3 --depth=1
 git clone https://android.googlesource.com/platform/system/libufdt scripts/ufdt/libufdt
+build_start=$(date +"%s")
 export PATH=$(pwd)/llvm-clang/bin:$PATH
 export ARCH=arm64
 export SUBARCH=arm64
@@ -32,7 +33,9 @@ then
 	echo "Compilation Failed. Check full.log"
 	exit
 fi
-echo "Compiled Successfully."
+build_complete=$(date +"%s")
+elapsed=$((build_complete-build_start))
+echo "Compiled Successfully in $elapsed Seconds."
 cp out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
 echo "Making DTBO..."
 python2 scripts/ufdt/libufdt/utils/src/mkdtboimg.py create out/arch/arm64/boot/dtbo.img --page_size=4096 out/arch/arm64/boot/dts/qcom/sm6150-idp-overlay.dtbo
