@@ -3,6 +3,7 @@ read cleanbuild
 echo "Make dtbo.img? (1/0)"
 read makedtbo
 if [ $cleanbuild = 1 ]
+echo "Cleaning..."
 then
 	make clean O=out
 	make mrproper O=out
@@ -10,6 +11,7 @@ then
 	mkdir out
 fi
 rm -rf AnyKernel3
+echo "Cloning Repos..."
 git clone https://github.com/ShivamKumar2002/LLVM-Clang-11 llvm-clang --depth=1
 git clone https://github.com/ShivamKumar2002/AnyKernel3 AnyKernel3 --depth=1
 git clone https://android.googlesource.com/platform/system/libufdt scripts/ufdt/libufdt
@@ -18,7 +20,9 @@ export ARCH=arm64
 export SUBARCH=arm64
 export KBUILD_BUILD_HOST="amazon_aws"
 export KBUILD_BUILD_USER="shivam"
+echo "Making Config..."
 make vendor/violet-perf_defconfig ARCH=arm64 O=out
+echo "Starting Compilation..."
 make -j$(nproc --all) \
 	O=out \
 	ARCH=arm64 \
@@ -27,13 +31,18 @@ make -j$(nproc --all) \
 	CROSS_COMPILE_ARM32=arm-linux-gnueabi- | tee full.log
 if [ ! -f out/arch/arm64/boot/Image.gz-dtb ]
 then
+	echo "Compilation Failed. Check full.log"
 	exit
 fi
+echo "Compiled Successfully."
 cp out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
 if [ $makedtbo = 1 ]
 then
+	echo "Making DTBO..."
 	python2 scripts/ufdt/libufdt/utils/src/mkdtboimg.py create out/arch/arm64/boot/dtbo.img --page_size=4096 out/arch/arm64/boot/dts/qcom/sm6150-idp-overlay.dtbo
 fi
+echo "Making Zip..."
 cp out/arch/arm64/boot/dtbo.img AnyKernel3/
 cd AnyKernel3
 zip -r9 "m4st3rkernel-dtbo-$(TZ=Asia/Kolkata date +'%M%H-%d%m%Y').zip" *
+echo "Zip is Ready. Go Flash and Enjoy Bootloop."
