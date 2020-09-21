@@ -1,7 +1,5 @@
 echo "Clean build? (1/0)"
 read cleanbuild
-echo "Make dtbo.img? (1/0)"
-read makedtbo
 if [ $cleanbuild = 1 ]
 echo "Cleaning..."
 then
@@ -36,11 +34,8 @@ then
 fi
 echo "Compiled Successfully."
 cp out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
-if [ $makedtbo = 1 ]
-then
-	echo "Making DTBO..."
-	python2 scripts/ufdt/libufdt/utils/src/mkdtboimg.py create out/arch/arm64/boot/dtbo.img --page_size=4096 out/arch/arm64/boot/dts/qcom/sm6150-idp-overlay.dtbo
-fi
+echo "Making DTBO..."
+python2 scripts/ufdt/libufdt/utils/src/mkdtboimg.py create out/arch/arm64/boot/dtbo.img --page_size=4096 out/arch/arm64/boot/dts/qcom/sm6150-idp-overlay.dtbo
 echo "Making Zip..."
 cp out/arch/arm64/boot/dtbo.img AnyKernel3/
 cd AnyKernel3
