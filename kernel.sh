@@ -1,5 +1,7 @@
 echo "Clean build? (1/0)"
 read cleanbuild
+echo "Use LLVM Tools? (1/0)"
+read usellvm
 if [ $cleanbuild = 1 ]
 then
 	echo "Cleaning..."
@@ -21,13 +23,27 @@ export KBUILD_BUILD_HOST="amazon_aws"
 export KBUILD_BUILD_USER="shivam"
 echo "Making Config..."
 make vendor/violet-perf_defconfig ARCH=arm64 O=out
-echo "Starting Compilation..."
-make -j$(nproc --all) \
+if [ $usellvm = 1 ]
+then
+	makecommands+=(
+		AR=llvm-ar \
+		NM=llvm-nm \
+		OBJCOPY=llvm-objcopy \
+		OBJDUMP=llvm-objdump \
+		STRIP=llvm-strip \
+		READOBJ=llvm-readobj \
+		READELF=llvm-readelf
+	)
+fi
+makecommands+=(
 	O=out \
 	ARCH=arm64 \
 	CC=clang \
 	CROSS_COMPILE=aarch64-linux-gnu- \
-	CROSS_COMPILE_ARM32=arm-linux-gnueabi- | tee full.log
+	CROSS_COMPILE_ARM32=arm-linux-gnueabi-
+)
+echo "Starting Compilation..."
+make -j$(nproc --all) "${makecommands[@]}" | tee full.log
 if [ ! -f out/arch/arm64/boot/Image.gz-dtb ]
 then
 	echo "Compilation Failed. Check full.log"
