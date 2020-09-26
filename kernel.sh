@@ -42,5 +42,5 @@ python2 scripts/ufdt/libufdt/utils/src/mkdtboimg.py create out/arch/arm64/boot/d
 echo "Making Zip..."
 cp out/arch/arm64/boot/dtbo.img AnyKernel3/
 cd AnyKernel3
-zip -r9 "m4st3rkernel-dtbo-$(TZ=Asia/Kolkata date +'%M%H-%d%m%Y').zip" *
+zip -r9 "m4st3rkernel-violet-dtbo-$(TZ=Asia/Kolkata date +'%M%H-%d%m%Y').zip" *
 echo "Zip is Ready. Go Flash and Enjoy Bootloop."
