@@ -1,8 +1,8 @@
 echo "Clean build? (1/0)"
 read cleanbuild
 if [ $cleanbuild = 1 ]
-echo "Cleaning..."
 then
+	echo "Cleaning..."
 	make clean O=out
 	make mrproper O=out
 	rm -rf out
