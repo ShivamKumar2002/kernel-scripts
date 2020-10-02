@@ -48,9 +48,6 @@ then
 	echo "Compilation Failed. Check full.log"
 	exit
 fi
-build_complete=$(date +"%s")
-elapsed=$((build_complete-build_start))
-echo "Compiled Successfully in $elapsed Seconds."
 cp out/arch/arm64/boot/Image.gz-dtb AnyKernel3/
 echo "Making DTBO..."
 python2 scripts/ufdt/libufdt/utils/src/mkdtboimg.py create out/arch/arm64/boot/dtbo.img --page_size=4096 out/arch/arm64/boot/dts/qcom/sm6150-idp-overlay.dtbo
@@ -58,4 +55,7 @@ echo "Making Zip..."
 cp out/arch/arm64/boot/dtbo.img AnyKernel3/
 cd AnyKernel3
 zip -r9 "m4st3rkernel-violet-dtbo-$(TZ=Asia/Kolkata date +'%M%H-%d%m%Y').zip" *
+build_complete=$(date +"%s")
+elapsed=$((build_complete-build_start))
+echo "Completed Successfully in $elapsed Seconds."
 echo "Zip is Ready. Go Flash and Enjoy Bootloop."
