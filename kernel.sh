@@ -15,7 +15,7 @@ git clone https://github.com/ShivamKumar2002/M4ST3R-Clang-11 m4st3r-clang --dept
 git clone https://github.com/ShivamKumar2002/AnyKernel3 AnyKernel3 --depth=1
 git clone https://android.googlesource.com/platform/system/libufdt scripts/ufdt/libufdt
 build_start=$(date +"%s")
-export PATH=$(pwd)/llvm-clang/bin:$PATH
+export PATH=$(pwd)/m4st3r-clang/bin:$PATH
 export ARCH=arm64
 export SUBARCH=arm64
 export KBUILD_BUILD_HOST="m4st3r_host"
