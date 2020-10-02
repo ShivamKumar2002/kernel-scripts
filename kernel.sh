@@ -11,15 +11,15 @@ then
 fi
 rm -rf AnyKernel3
 echo "Cloning Repos..."
-git clone https://github.com/ShivamKumar2002/LLVM-Clang-11 llvm-clang --depth=1
+git clone https://github.com/ShivamKumar2002/M4ST3R-Clang-11 m4st3r-clang --depth=1
 git clone https://github.com/ShivamKumar2002/AnyKernel3 AnyKernel3 --depth=1
 git clone https://android.googlesource.com/platform/system/libufdt scripts/ufdt/libufdt
 build_start=$(date +"%s")
 export PATH=$(pwd)/llvm-clang/bin:$PATH
 export ARCH=arm64
 export SUBARCH=arm64
-export KBUILD_BUILD_HOST="amazon_aws"
-export KBUILD_BUILD_USER="shivam"
+export KBUILD_BUILD_HOST="m4st3r_host"
+export KBUILD_BUILD_USER="ShivamKumar2002"
 echo "Making Config..."
 make vendor/violet-perf_defconfig ARCH=arm64 O=out
 if [ $usellvm = 1 ]
