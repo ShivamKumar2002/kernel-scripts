@@ -1,7 +1,6 @@
 echo "Clean build? (1/0)"
 read cleanbuild
-echo "Use LLVM Tools? (1/0)"
-read usellvm
+usellvm=1
 if [ $cleanbuild = 1 ]
 then
 	echo "Cleaning..."
